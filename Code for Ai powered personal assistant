@@ -1,0 +1,65 @@
+import requests
+
+# Weather Function
+def get_weather(city):
+    api_key = "YOUR_API_KEY"  # Replace with your OpenWeatherMap API key
+    url = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + api_key + "&units=metric"
+    response = requests.get(url)
+    if response.status_code == 200:
+        data = response.json()
+        temp = data["main"]["temp"]
+        desc = data["weather"][0]["description"]
+        return "Temperature: " + str(temp) + "°C, Description: " + desc
+    else:
+        return "Sorry, could not fetch weather."
+
+# Email Function (Fake for now)
+def send_email():
+    print("Email sending is not supported yet. But this is a placeholder.")
+
+# Reminder Functions
+reminders = []
+def add_reminder(reminder):
+    reminders.append(reminder)
+    print("Reminder added!")
+
+def show_reminders():
+    if len(reminders) == 0:
+        print("No reminders yet.")
+    else:
+        print("Here are your reminders:")
+        for r in reminders:
+            print("- " + r)
+
+# Main Program
+print("Welcome to my personal assistant!")
+while True:
+    print("\nWhat do you want to do?")
+    print("1. Check weather")
+    print("2. Send an email (not supported yet)")
+    print("3. Add a reminder")
+    print("4. Show reminders")
+    print("5. Exit")
+
+    choice = input("Enter your choice (1-5): ")
+
+    if choice == "1":
+        city = input("Enter the city name: ")
+        print(get_weather(city))
+
+    elif choice == "2":
+        send_email()
+
+    elif choice == "3":
+        reminder = input("Enter your reminder: ")
+        add_reminder(reminder)
+
+    elif choice == "4":
+        show_reminders()
+
+    elif choice == "5":
+        print("Goodbye!")
+        break
+
+    else:
+        print("Invalid choice. Please try again.")
